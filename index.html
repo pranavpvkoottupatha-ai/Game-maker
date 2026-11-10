@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NOVA AI Game Maker</title>
+<meta name="theme-color" content="#070816">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="nav" aria-label="Main navigation">
+    <div class="brand"><span class="logo">N</span><div><strong>NOVA AI</strong><small>Game Maker</small></div></div>
+    <button class="tab active" data-view="create">Create</button>
+    <button class="tab" data-view="project">Project</button>
+    <button class="tab" data-view="history">History</button>
+    <button class="tab" data-view="settings">Settings</button>
+  </aside>
+
+  <main>
+    <div id="backend-banner" class="banner" role="status"></div>
+
+    <!-- CREATE -->
+    <section id="view-create" class="view active">
+      <h1>Describe your game</h1>
+      <p class="muted">NOVA turns a description into a GDevelop-ready project plan.</p>
+      <div class="card">
+        <label for="prompt">Game description</label>
+        <textarea id="prompt" rows="7" placeholder="Describe the game you want to create..."></textarea>
+        <div class="row">
+          <button id="sample" class="btn ghost" type="button">Use dinosaur sample prompt</button>
+          <span id="count" class="muted"></span>
+        </div>
+        <fieldset class="seg">
+          <legend>Game type</legend>
+          <label><input type="radio" name="gtype" value="2D" checked><span>2D</span></label>
+          <label><input type="radio" name="gtype" value="3D"><span>3D</span></label>
+        </fieldset>
+        <button id="generate" class="btn primary" type="button">Generate Game</button>
+      </div>
+
+      <div class="card" id="progress-card" hidden>
+        <h2>Generation progress</h2>
+        <ol id="steps" class="steps"></ol>
+        <p id="progress-msg" class="msg"></p>
+        <button id="load-sample" class="btn ghost" type="button" hidden>Load static sample data to preview the UI</button>
+      </div>
+    </section>
+
+    <!-- PROJECT -->
+    <section id="view-project" class="view">
+      <h1 id="project-title">Project</h1>
+      <div class="chips" role="tablist">
+        <button class="chip active" data-pane="outline">Outline</button>
+        <button class="chip" data-pane="scenes">Scenes</button>
+        <button class="chip" data-pane="objects">Objects</button>
+        <button class="chip" data-pane="events">Events &amp; logic</button>
+      </div>
+      <div id="source-tag"></div>
+      <div id="pane-outline" class="pane active"></div>
+      <div id="pane-scenes" class="pane"></div>
+      <div id="pane-objects" class="pane"></div>
+      <div id="pane-events" class="pane"></div>
+      <div class="row" id="export-row">
+        <button id="export-json" class="btn ghost" type="button">Download project JSON</button>
+        <button id="export-gd" class="btn ghost" type="button">Export to GDevelop</button>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="view-history" class="view">
+      <h1>Project history</h1>
+      <div id="history-list"></div>
+      <button id="clear-history" class="btn ghost danger" type="button">Clear history</button>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="view-settings" class="view">
+      <h1>Settings</h1>
+      <div class="card">
+        <label for="s-endpoint">AI backend URL</label>
+        <input id="s-endpoint" type="url" placeholder="https://your-server.example/generate">
+        <p class="hint">Must accept a POST with JSON and return the project JSON described in script.js. Leave empty to run with no backend.</p>
+        <label for="s-key">API key (optional)</label>
+        <input id="s-key" type="password" autocomplete="off" placeholder="Sent as a Bearer token">
+        <p class="hint">Stored in this browser only (localStorage). Use a server-side proxy for real keys.</p>
+        <label for="s-timeout">Request timeout (seconds)</label>
+        <input id="s-timeout" type="number" min="5" max="300" value="60">
+        <label for="s-gdurl">GDevelop exporter URL (future)</label>
+        <input id="s-gdurl" type="url" placeholder="Not implemented yet" disabled>
+        <div class="row">
+          <button id="save-settings" class="btn primary" type="button">Save settings</button>
+          <button id="test-backend" class="btn ghost" type="button">Test connection</button>
+        </div>
+        <p id="settings-msg" class="msg"></p>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
